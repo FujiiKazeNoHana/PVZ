@@ -26,6 +26,22 @@ class Grid:
 		rect = self.get_cell_rect(row, col)
 		return rect.centerx, rect.centery
 
+	def get_cell_at_pos(self, pos: tuple[int, int]) -> tuple[int, int] | None:
+		px, py = pos
+		# 快速边界检查
+		left = GRID_OFFSET_X
+		top = GRID_OFFSET_Y
+		right = GRID_OFFSET_X + self.cols * CELL_WIDTH
+		bottom = GRID_OFFSET_Y + self.rows * CELL_HEIGHT
+		if px < left or px >= right or py < top or py >= bottom:
+			return None
+		col = (px - GRID_OFFSET_X) // CELL_WIDTH
+		row = (py - GRID_OFFSET_Y) // CELL_HEIGHT
+		# 进一步确保在合法范围
+		if 0 <= row < self.rows and 0 <= col < self.cols:
+			return int(row), int(col)
+		return None
+
 	def draw(self, surface: pygame.Surface) -> None:
 		for r in range(self.rows):
 			for c in range(self.cols):
@@ -33,5 +49,12 @@ class Grid:
 				color = COLOR_GRID_ALT if (r + c) % 2 else COLOR_GRID
 				pygame.draw.rect(surface, color, rect, border_radius=6)
 				pygame.draw.rect(surface, (0, 0, 0), rect, width=1, border_radius=6)
+
+	def get_row_by_y(self, y: int) -> int | None:
+		top = GRID_OFFSET_Y
+		bottom = GRID_OFFSET_Y + self.rows * CELL_HEIGHT
+		if y < top or y >= bottom:
+			return None
+		return int((y - GRID_OFFSET_Y) // CELL_HEIGHT)
 
 
