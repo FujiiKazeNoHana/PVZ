@@ -1,0 +1,24 @@
+# Normalize line endings and treat common text files as text
+* text=auto
+
+# Prefer LF in repo; Git will convert on checkout if configured (core.autocrlf)
+*.py         text eol=lf
+*.md         text eol=lf
+*.json       text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+*.txt       text eol=lf
+*.gitignore  text eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+
+
